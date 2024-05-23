@@ -34,3 +34,17 @@ class RegistrationSerializer(serializers.ModelSerializer):
 class UserLoginSerializer(serializers.Serializer):
     username = serializers.CharField(required = True)
     password = serializers.CharField(required = True)
+
+
+
+
+
+from rest_framework import serializers
+from django.contrib.auth.models import User
+from .models import Profile
+
+class profileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'
+

@@ -106,3 +106,26 @@ class UserLogoutAPIView(APIView):
             return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
         except AttributeError:
             return Response({'error': 'Token not provided'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
+
+from .models import Profile
+from .serializers import profileSerializer
+
+class ProfileDetail(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class =  profileSerializer
+   
+    def create(self, request, *args, **kwargs):
+        print(request.data)  # Log the incoming request data
+        return super().create(request, *args, **kwargs)
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user_id = self.request.query_params.get('user_id')
+        if user_id:
+            queryset = queryset.filter(user_id=user_id)
+        return queryset
